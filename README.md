@@ -20,6 +20,10 @@ poetry run python cli.py --help
 ## Development
 
 ```bash
+# lint and format
 poetry run ruff format
 poetry run ruff check --fix
+
+# run tests
+poetry run pytest
 ```
