@@ -41,7 +41,7 @@ def get_table_data(html: str) -> list[VMPrice]:
                 linux_price=float(row_list[4].replace(",", "")),
                 windows_price=float("nan")
                 if row_list[5] == "n/a"
-                else row_list[5].replace(",", ""),
+                else float(row_list[5].replace(",", "")),
             )
             vms.append(vm_price)
         except IndexError:
