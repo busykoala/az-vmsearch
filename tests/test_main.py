@@ -1,6 +1,9 @@
 from unittest.mock import patch
-from az_vmsearch.main import find_vms, Config
-from az_vmsearch.cloudprice import Currency, VMPrice
+
+from az_vmsearch.cloudprice import Currency
+from az_vmsearch.cloudprice import VMPrice
+from az_vmsearch.main import Config
+from az_vmsearch.main import find_vms
 
 
 def test_find_vms():
@@ -25,12 +28,7 @@ def test_find_vms():
     ]
 
     mock_quota_data = [
-        {
-            "name": "standardAv2Family",
-            "properties": {
-                "limit": {"value": 10}
-            }
-        }
+        {"name": "standardAv2Family", "properties": {"limit": {"value": 10}}}
     ]
 
     mock_vms = [
@@ -55,12 +53,16 @@ def test_find_vms():
         ]
 
     # Patch the dependent functions using correct import paths
-    with patch("az_vmsearch.main.get_cloud_prices", return_value=mock_cloud_prices), \
-         patch("az_vmsearch.main.get_quota_data", return_value=mock_quota_data), \
-         patch("az_vmsearch.main.get_vms", return_value=mock_vms), \
-         patch("az_vmsearch.main.create_vm_family", side_effect=mock_create_vm_family), \
-         patch("az_vmsearch.main.check_if_vm_exists", side_effect=mock_check_if_vm_exists):
-
+    with patch(
+        "az_vmsearch.main.get_cloud_prices", return_value=mock_cloud_prices
+    ), patch(
+        "az_vmsearch.main.get_quota_data", return_value=mock_quota_data
+    ), patch("az_vmsearch.main.get_vms", return_value=mock_vms), patch(
+        "az_vmsearch.main.create_vm_family", side_effect=mock_create_vm_family
+    ), patch(
+        "az_vmsearch.main.check_if_vm_exists",
+        side_effect=mock_check_if_vm_exists,
+    ):
         # Call the function under test
         result = find_vms(config)
 
