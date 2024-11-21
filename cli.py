@@ -1,3 +1,4 @@
+import sys
 from pprint import pprint
 
 import click
@@ -48,20 +49,25 @@ def search_vms(
     """
     CLI to search for Azure VMs based on specified criteria.
     """
-    # Create configuration
-    config = Config(
-        subscription_id=subscription_id,
-        region=region,
-        currency=Currency[currency],
-        min_cores=min_cores,
-        min_memory=min_memory,
-    )
+    try:
+        # Create configuration
+        config = Config(
+            subscription_id=subscription_id,
+            region=region,
+            currency=Currency[currency],
+            min_cores=min_cores,
+            min_memory=min_memory,
+        )
 
-    # Find VMs
-    vms = find_vms(config)
-    click.echo(f"Found {len(vms)} VMs. Displaying cheapest {limit}:\n")
-    for vm in vms[:limit]:
-        pprint(vm)
+        # Find VMs
+        vms = find_vms(config)
+        click.echo(f"Found {len(vms)} VMs. Displaying cheapest {limit}:\n")
+        for vm in vms[:limit]:
+            pprint(vm)
+
+    except Exception as e:
+        click.echo(f"Error: {e}", err=True)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
