@@ -47,4 +47,4 @@ def find_vms(config: Config) -> list[VMPrice]:
                     v.quota = quota_num
                 available_vms.extend(existing_vms)
 
-    return available_vms
+    return sorted(available_vms, key=lambda x: x.linux_price)
