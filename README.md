@@ -1,16 +1,31 @@
 # Azure VM Search Utility
 
-The mapping in azure between VM families and VM types is not always clear.
-To get a cheap option that is available in a subscription quota in a region
-this utility can be used.
+The **Azure VM Search Utility** is a command-line tool designed to help you
+find the cheapest VM types for a specific Azure region that are within your
+subscription quota.
 
-The tool is using the price list by `cloudprice.net` to get the VM prices.
-The prices are used to determine which VMs are available in a subscription
-quota in a specific region.
+### How It Works
+
+1. **Fetch Prices**: The tool retrieves VM prices from
+   **[cloudprice.net](https://cloudprice.net)**.
+2. **Retrieve Quotas**: It uses **az-cli** to gather subscription quotas and
+   the available VM types in the specified region.
+3. **Mapping**: VM types are mapped to VM families to determine the cheapest
+   options that fit within your quota.
+4. **Display Results**: Outputs a list of the cheapest available VMs based on
+   your criteria.
+
+> **Important**: Ensure you are logged in to `az-cli` and have the `az` command
+> available in your shell.  
+> Use of **cloudprice.net** programmatically is at your own risk, as it might
+> violate their terms of service.
+
+![screenshot](./assets/screenshot.png)
 
 ## Usage
 
 ```bash
+# clone, install and run the tool
 git clone https://github.com/busykoala/az-vmsearch.git
 cd az-vmsearch
 poetry install

@@ -17,7 +17,7 @@ from az_vmsearch.main import find_vms
 @click.option(
     "--region",
     required=True,
-    help="Azure region to search for VMs. Default is 'westeurope'.",
+    help="Azure region to search for VMs. For example 'westeurope'.",
 )
 @click.option(
     "--currency",
