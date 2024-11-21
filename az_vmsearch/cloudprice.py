@@ -6,6 +6,8 @@ import requests
 from bs4 import BeautifulSoup
 from bs4.element import NavigableString
 
+from az_vmsearch.create_vm_family import VMProperties
+
 
 class Currency(Enum):
     USD = "USD"
@@ -21,6 +23,7 @@ class VMPrice:
     linux_price: float
     windows_price: float
     quota: Optional[int] = 0
+    properties: Optional[VMProperties] = None
 
 
 def get_table_data(html: str) -> list[VMPrice]:

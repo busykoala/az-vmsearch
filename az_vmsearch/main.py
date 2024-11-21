@@ -5,6 +5,7 @@ from az_vmsearch.cloudprice import Currency
 from az_vmsearch.cloudprice import VMPrice
 from az_vmsearch.cloudprice import get_cloud_prices
 from az_vmsearch.create_vm_family import create_vm_family
+from az_vmsearch.create_vm_family import get_vm_properties
 from az_vmsearch.get_quota_data import get_quota_data
 from az_vmsearch.get_vms import get_vms
 
@@ -30,6 +31,7 @@ def find_vms(config: Config) -> list[VMPrice]:
     available_vms = []
     for vm in vms:
         vm_family = create_vm_family(vm)
+        vm_type_properties = get_vm_properties(vm, config.region)
         if not vm_family:
             continue
 
@@ -45,6 +47,7 @@ def find_vms(config: Config) -> list[VMPrice]:
                 )
                 for v in existing_vms:
                     v.quota = quota_num
+                    v.properties = vm_type_properties
                 available_vms.extend(existing_vms)
 
     return sorted(available_vms, key=lambda x: x.linux_price)
